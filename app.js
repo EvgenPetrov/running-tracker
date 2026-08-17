@@ -16,6 +16,24 @@
 
   dateInput.valueAsDate = new Date();
 
+  function digitsToTimeString(digits) {
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 4) {
+      const minutes = digits.slice(0, digits.length - 2);
+      const seconds = digits.slice(-2);
+      return `${minutes}:${seconds}`;
+    }
+    const hours = digits.slice(0, digits.length - 4);
+    const minutes = digits.slice(-4, -2);
+    const seconds = digits.slice(-2);
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+  timeInput.addEventListener("input", () => {
+    const digits = timeInput.value.replace(/\D/g, "").slice(0, 6);
+    timeInput.value = digitsToTimeString(digits);
+  });
+
   function loadRuns() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
